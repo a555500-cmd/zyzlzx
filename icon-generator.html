@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中医治疗系统图标生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d8cf0;
+            text-align: center;
+        }
+        .canvas-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #2d8cf0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #187fe7;
+        }
+        .instructions {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .instructions h3 {
+            color: #2d8cf0;
+            margin-top: 0;
+        }
+        .instructions ol {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>中医治疗系统图标生成器</h1>
+        
+        <div class="instructions">
+            <h3>使用说明：</h3>
+            <ol>
+                <li>点击下方的"生成图标"按钮</li>
+                <li>右键点击生成的图标，选择"另存为"</li>
+                <li>将图标保存到icons文件夹中</li>
+                <li>按照尺寸重命名文件：</li>
+                <ul>
+                    <li>72x72.png → icon-72x72.png</li>
+                    <li>96x96.png → icon-96x96.png</li>
+                    <li>128x128.png → icon-128x128.png</li>
+                    <li>144x144.png → icon-144x144.png</li>
+                    <li>152x152.png → icon-152x152.png</li>
+                    <li>192x192.png → icon-192x192.png</li>
+                    <li>384x384.png → icon-384x384.png</li>
+                    <li>512x512.png → icon-512x512.png</li>
+                </ul>
+            </ol>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="iconCanvas" width="512" height="512"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button onclick="generateIcon(72, 72)">生成 72x72 图标</button>
+            <button onclick="generateIcon(96, 96)">生成 96x96 图标</button>
+            <button onclick="generateIcon(128, 128)">生成 128x128 图标</button>
+            <button onclick="generateIcon(144, 144)">生成 144x144 图标</button>
+            <button onclick="generateIcon(152, 152)">生成 152x152 图标</button>
+            <button onclick="generateIcon(192, 192)">生成 192x192 图标</button>
+            <button onclick="generateIcon(384, 384)">生成 384x384 图标</button>
+            <button onclick="generateIcon(512, 512)">生成 512x512 图标</button>
+        </div>
+    </div>
+    
+    <script>
+        function generateIcon(width, height) {
+            const canvas = document.getElementById('iconCanvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, width, height);
+            
+            // 绘制背景
+            ctx.fillStyle = '#2d8cf0';
+            ctx.fillRect(0, 0, width, height);
+            
+            // 绘制中医符号 - 阴阳
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(width, height) * 0.4;
+            
+            // 绘制外圈
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            
+            // 绘制阴阳符号
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI, false);
+            ctx.lineTo(centerX + radius, centerY);
+            ctx.closePath();
+            ctx.fillStyle = '#2d8cf0';
+            ctx.fill();
+            
+            // 绘制小圆圈
+            const smallRadius = radius / 2;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY - smallRadius, smallRadius, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + smallRadius, smallRadius, 0, 2 * Math.PI);
+            ctx.fillStyle = '#2d8cf0';
+            ctx.fill();
+            
+            // 绘制更小的圆圈
+            const tinyRadius = smallRadius / 2;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY - smallRadius, tinyRadius, 0, 2 * Math.PI);
+            ctx.fillStyle = '#2d8cf0';
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + smallRadius, tinyRadius, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            
+            // 绘制十字
+            ctx.strokeStyle = '#2d8cf0';
+            ctx.lineWidth = Math.max(2, width * 0.04);
+            
+            // 水平线
+            ctx.beginPath();
+            ctx.moveTo(centerX - radius * 0.7, centerY);
+            ctx.lineTo(centerX + radius * 0.7, centerY);
+            ctx.stroke();
+            
+            // 垂直线
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - radius * 0.7);
+            ctx.lineTo(centerX, centerY + radius * 0.7);
+            ctx.stroke();
+        }
+        
+        // 默认生成512x512图标
+        generateIcon(512, 512);
+    </script>
+</body>
+</html>
